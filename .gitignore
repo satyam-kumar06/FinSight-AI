@@ -4,3 +4,7 @@ frontend/.env
 *.sqlite3
 news.db
 chroma_db/
+backend/venv/
+venv/
+__pycache__/
+*.pyc
