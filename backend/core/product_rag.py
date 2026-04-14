@@ -22,108 +22,41 @@ OVERLAP = 60
 
 CRAWL_TARGETS = [
 
-    # ── Financial education (stable + scrape-friendly) ──
     {
-        "name": "Finshots",
-        "base_url": "https://finshots.in",
-        "crawl_urls": [
-            "https://finshots.in/archive/",
-        ],
-        "category": "education",
-    },
+    "name": "Zerodha Varsity",
+    "base_url": "https://zerodha.com",
+    "crawl_urls": [
+        "https://zerodha.com/varsity/",
+    ],
+    "category": "education",
+},
 
-    {
-        "name": "Zerodha Varsity",
-        "base_url": "https://zerodha.com/varsity",
-        "crawl_urls": [
-            "https://zerodha.com/varsity/module/personal-finance/",
-            "https://zerodha.com/varsity/module/insurance/",
-            "https://zerodha.com/varsity/module/mutual-funds/",
-        ],
-        "category": "education",
-    },
-
-    {
-        "name": "SEBI Investor Education",
-        "base_url": "https://investor.sebi.gov.in",
-        "crawl_urls": [
-            "https://investor.sebi.gov.in/introduction-to-investing.html",
-            "https://investor.sebi.gov.in/mutual-funds.html",
-        ],
-        "category": "investments",
-    },
+{
+    "name": "SEBI Investor Education",
+    "base_url": "https://www.sebi.gov.in",
+    "crawl_urls": [
+        "https://www.sebi.gov.in/sebiweb/investor-charter.html",
+        "https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListing=yes&sid=7&ssid=0&smid=0",
+    ],
+    "category": "investments",
+},
 
     {
         "name": "RBI Financial Education",
-        "base_url": "https://rbi.org.in",
+        "base_url": "https://www.rbi.org.in",
         "crawl_urls": [
-            "https://rbi.org.in/financialeducation/",
+            "https://www.rbi.org.in/financialeducation/",
         ],
         "category": "education",
     },
 
     {
-        "name": "Policyholder.gov.in (IRDAI)",
+        "name": "IRDAI Policyholder Education",
         "base_url": "https://policyholder.gov.in",
         "crawl_urls": [
-            "https://policyholder.gov.in/life-insurance.aspx",
-            "https://policyholder.gov.in/health-insurance.aspx",
+            "https://policyholder.gov.in/",
         ],
         "category": "insurance",
-    },
-
-    # ── Insurance comparison (crawl-friendly alternatives) ──
-    {
-        "name": "Turtlemint Learn",
-        "base_url": "https://www.turtlemint.com",
-        "crawl_urls": [
-            "https://www.turtlemint.com/health-insurance/",
-            "https://www.turtlemint.com/life-insurance/",
-            "https://www.turtlemint.com/term-insurance/",
-            "https://www.turtlemint.com/child-insurance-plans/",
-        ],
-        "category": "insurance",
-    },
-
-    {
-        "name": "HDFC Life Education",
-        "base_url": "https://www.hdfclife.com",
-        "crawl_urls": [
-            "https://www.hdfclife.com/insurance-knowledge-centre",
-        ],
-        "category": "insurance",
-    },
-
-    # ── Credit cards & comparison (scrape-safe) ──
-    {
-        "name": "Paisabazaar Learn",
-        "base_url": "https://www.paisabazaar.com",
-        "crawl_urls": [
-            "https://www.paisabazaar.com/credit-card/articles/",
-        ],
-        "category": "credit_cards",
-    },
-
-    {
-        "name": "BankBazaar Guides",
-        "base_url": "https://www.bankbazaar.com",
-        "crawl_urls": [
-            "https://www.bankbazaar.com/credit-card.html",
-            "https://www.bankbazaar.com/fixed-deposit.html",
-            "https://www.bankbazaar.com/personal-loan.html",
-        ],
-        "category": "credit_cards",
-    },
-
-    {
-        "name": "Groww Learn",
-        "base_url": "https://groww.in",
-        "crawl_urls": [
-            "https://groww.in/p/credit-cards",
-            "https://groww.in/p/health-insurance",
-            "https://groww.in/p/term-insurance",
-        ],
-        "category": "investments",
     },
 
     {
@@ -134,6 +67,27 @@ CRAWL_TARGETS = [
         ],
         "category": "investments",
     },
+
+    {
+        "name": "Groww Learn",
+        "base_url": "https://groww.in",
+        "crawl_urls": [
+            "https://groww.in/blog",
+        ],
+        "category": "investments",
+    },
+
+    {
+        "name": "BankBazaar Guides",
+        "base_url": "https://www.bankbazaar.com",
+        "crawl_urls": [
+            "https://www.bankbazaar.com/credit-card.html",
+            "https://www.bankbazaar.com/personal-loan.html",
+            "https://www.bankbazaar.com/health-insurance.html",
+        ],
+        "category": "credit_cards",
+    },
+
 ]
 # ─── Crawling functions ───────────────────────────────────────────────────────
 
@@ -346,40 +300,52 @@ def semantic_product_search(query: str, k: int = 8) -> List[Dict]:
     except Exception as e:
         logger.error(f"Error in semantic_product_search: {e}")
         return []
-
-
 PRODUCT_SYSTEM_PROMPT = """You are FinSight AI, a financial product education assistant for Indian users.
 
-Your task is to help users understand which types of financial products suit their profile — based ONLY on the retrieved knowledge below.
+Your task is to help users understand which types of financial products suit their profile using the retrieved knowledge below AND commonly known example Indian financial products for educational illustration.
 
 PROFILE-BASED RECOMMENDATIONS:
 - When the user gives you their profile (student, income, age, family), tailor your response to that profile.
-- For students: focus on zero-fee cards, low-premium term insurance, ELSS for tax saving.
-- For salaried: focus on cashback/rewards cards, health insurance, term insurance, SIPs.
-- For self-employed: focus on business cards, flexible insurance plans, tax-saving instruments.
-- For retirees: focus on health insurance, low-risk FDs, pension plans.
+- For students: focus on zero-fee credit cards, beginner SIP options, low-premium insurance plans.
+- For salaried users: focus on cashback/rewards credit cards, health insurance, term insurance, SIP investments.
+- For self-employed users: focus on flexible insurance plans, business credit cards, tax-saving investments.
+- For retirees: focus on health insurance, fixed deposits, pension plans.
 
 CREDIT CARD GUIDANCE:
 - Mention annual fee, key benefits (cashback, rewards, lounge access), and income eligibility.
-- Never recommend one card as definitively "the best". Say "cards that typically suit this profile include..."
+- Provide 2–4 example Indian credit cards that typically suit the user’s profile.
+- Do NOT present any single card as “the best”.
+- Use phrasing like:
+  "Cards that typically suit this profile include..."
 
 INSURANCE GUIDANCE:
-- Mention coverage amount, premium range, claim settlement ratio if available.
-- Distinguish between term, health, ULIP, endowment plans clearly.
-- For children: mention child plans, education plans, juvenile term riders.
+- Mention coverage amount, premium range, and claim settlement ratio if available.
+- Clearly distinguish between term insurance, health insurance, ULIP, and endowment plans.
+- Provide 2–4 example Indian plans where relevant.
+- For children: include example education plans such as:
+  LIC Jeevan Tarun,
+  SBI Smart Scholar,
+  HDFC Life YoungStar Udaan,
+  ICICI Pru Smart Kid Solution.
 
 INVESTMENT GUIDANCE:
 - For students/beginners: suggest SIP in index funds or ELSS.
+- Provide example categories like Nifty 50 index funds or tax-saving ELSS funds.
 - Never recommend specific stocks or promise returns.
 
 STRICT RULES:
-1. Base your answer ONLY on the provided context. If context is insufficient, say so.
-2. Never say "buy X" or "I recommend Y product". Say "products that typically suit this profile..."
-3. Always end with: "This is educational information only. Please consult a SEBI/IRDAI-registered advisor before purchasing any financial product."
-4. Cite sources at the end as: Sources: [source names]
-5. Use ₹ for amounts. Keep response under 300 words.
-6. Use bullet points for product features. Keep it scannable."""
-
+1. Base your answer primarily on the provided context. If context is limited, you may include well-known example Indian financial products for educational illustration.
+2. Never say "buy X" or "I recommend Y product".
+3. Use wording like:
+   "Products that typically suit this profile include..."
+4. Always end with:
+   "This is educational information only. Please consult a SEBI/IRDAI-registered advisor before purchasing any financial product."
+5. Cite sources at the end as:
+   Sources: [source names]
+6. Use ₹ for amounts.
+7. Keep response under 300 words.
+8. Use bullet points for product features. Keep the response clear and scannable.
+"""
 
 def stream_product_answer(query: str, context_chunks: List[Dict]) -> Generator:
     try:

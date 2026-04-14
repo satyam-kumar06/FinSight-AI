@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-family-sans: 'DM Sans', system-ui, sans-serif;
+  --font-family-mono: 'DM Mono', monospace;
+  --font-family-display: 'DM Serif Display', Georgia, serif;
+
+  --color-ink: #0f172a;
+  --color-ink-muted: #64748b;
+  --color-ink-faint: #94a3b8;
+  --color-ink-dark: #1e293b;
+
+  --color-surface: #f8fafc;
+  --color-surface-border: #e2e8f0;
+  --color-surface-raised: #f8fafc;
+  --color-surface-dark: #0a0f1a;
+  --color-surface-darkraised: #111827;
+
+  --color-accent: #c9a84c;
+  --color-accent-light: #e8c96d;
+  --color-accent-dark: #a07830;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #0a0f1a;
+  color: #f1f5f9;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+
+.card {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.05);
+  background-color: #111827;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
+}
+
+.btn-primary {
+  border-radius: 1rem;
+  background-color: #f1f5f9;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f172a;
+  transition: background-color 0.15s;
+  cursor: pointer;
+}
+.btn-primary:hover { background-color: #ffffff; }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-ghost {
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  transition: all 0.15s;
+  cursor: pointer;
+  background: transparent;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.2); background-color: rgba(255,255,255,0.05); }
+
+.input {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  background-color: rgba(255,255,255,0.05);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #f1f5f9;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input::placeholder { color: #64748b; }
+.input:focus { border-color: rgba(255,255,255,0.2); }
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #64748b;
+}
