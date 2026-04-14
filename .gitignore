@@ -1,0 +1,6 @@
+.env
+backend/.env
+frontend/.env
+*.sqlite3
+news.db
+chroma_db/
